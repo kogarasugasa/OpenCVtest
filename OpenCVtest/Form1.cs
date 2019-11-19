@@ -33,8 +33,8 @@ namespace OpenCVtest
             InitializeComponent();
 
             BorderLineTextBox1.Text = "0.9";
-            PictureTextBox1.Text = @"E:\作業\A001.jpg";
-            PictureTextBox2.Text = @"E:\作業\A002.jpg";
+            PictureTextBox1.Text = @"C:\作業\A001.jpg";
+            PictureTextBox2.Text = @"C:\作業\A002.jpg";
 
             //captureTimer.Tick += new EventHandler(this.Capture);
             //captureTimer.Interval = 200;
@@ -42,7 +42,13 @@ namespace OpenCVtest
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            CaptureStop();
+            if (isPreview)
+            {
+                CaptureStop();
+                isPreview = false;
+            }
+
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -63,17 +69,17 @@ namespace OpenCVtest
 
         private void GrayButton1_Click(object sender, EventArgs e)
         {
-            using (Mat mat = new Mat(@"E:\作業\A001.jpg"))
+            using (Mat mat = new Mat(@"C:\作業\A001.jpg"))
             using (Mat matGray = mat.CvtColor(ColorConversionCodes.BGR2GRAY))
             {
                 Cv2.ImShow("grayscale_show", matGray);
 
                 //画像を保存
-                Cv2.ImWrite(@"E:\作業\B001.jpg", mat);
+                Cv2.ImWrite(@"C:\作業\B001.jpg", mat);
 
                 //画像の切り欠き保存
                 var mat2 = mat.Clone(new Rect(100, 100, 200, 150));
-                Cv2.ImWrite(@"E:\作業\C001.jpg", mat2);
+                Cv2.ImWrite(@"C:\作業\C001.jpg", mat2);
             }
         }
 
@@ -188,13 +194,13 @@ namespace OpenCVtest
         public void CaptureStart()
         {
             //カメラ画像取得用のVideoCapture作成
-            camera = new VideoCapture(0);
+            camera = new VideoCapture(1);
             if (!camera.IsOpened())
             {
                 MessageBox.Show("cannot open camera");
                 this.Close();
             }
-            int width = 702;
+            int width = 720;
             int height = 405;
             camera.FrameWidth = width;
             camera.FrameHeight = height;
@@ -208,9 +214,6 @@ namespace OpenCVtest
             //PictureBoxを出力サイズに合わせる
             pictureBox1.Width = frame.Cols;
             pictureBox1.Height = frame.Rows;
-
-            //描画用のGraphics作成
-            graphic = pictureBox1.CreateGraphics();
 
             //画像取得スレッド開始
             backgroundWorker1.RunWorkerAsync();
@@ -234,6 +237,7 @@ namespace OpenCVtest
             {
                 //画像取得
                 camera.Read(frame);
+                Task.Delay(3500);
                 bw.ReportProgress(0);
             }
         }
@@ -243,10 +247,21 @@ namespace OpenCVtest
             //描画
             //graphic.DrawImage(bmp, 0, 0, frame.Cols, frame.Rows);
             TemprateMatch(frame);
-            Image dispImage;
-            dispImage = BitmapConverter.ToBitmap(frame);
-            pictureBox1.Image = dispImage;
+            Image dispImage;            
 
+            using (Mat resizeFrame = new Mat())
+            {
+                Cv2.Resize(frame, resizeFrame, new OpenCvSharp.Size(720, 405));
+                dispImage = BitmapConverter.ToBitmap(resizeFrame);
+            }
+
+            Image oldImage = pictureBox1.Image;
+
+            pictureBox1.Image = dispImage;
+            if (oldImage != null)
+            {
+                oldImage.Dispose();
+            }
 
         }
         private void GetPicturePath(ref string filePath1, ref string filePath2)

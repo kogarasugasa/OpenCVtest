@@ -41,6 +41,7 @@
             this.CaptureButton1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,7 +82,7 @@
             // 
             this.BorderLineTextBox1.Location = new System.Drawing.Point(305, 108);
             this.BorderLineTextBox1.Name = "BorderLineTextBox1";
-            this.BorderLineTextBox1.Size = new System.Drawing.Size(50, 19);
+            this.BorderLineTextBox1.Size = new System.Drawing.Size(50, 25);
             this.BorderLineTextBox1.TabIndex = 3;
             // 
             // label1
@@ -89,7 +90,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(270, 111);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
+            this.label1.Size = new System.Drawing.Size(44, 18);
             this.label1.TabIndex = 4;
             this.label1.Text = "閾値";
             // 
@@ -109,7 +110,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(246, 30);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.Size = new System.Drawing.Size(80, 18);
             this.label2.TabIndex = 6;
             this.label2.Text = "検索範囲";
             // 
@@ -117,7 +118,7 @@
             // 
             this.PictureTextBox1.Location = new System.Drawing.Point(305, 27);
             this.PictureTextBox1.Name = "PictureTextBox1";
-            this.PictureTextBox1.Size = new System.Drawing.Size(300, 19);
+            this.PictureTextBox1.Size = new System.Drawing.Size(300, 25);
             this.PictureTextBox1.TabIndex = 7;
             // 
             // label3
@@ -125,7 +126,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(246, 67);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.Size = new System.Drawing.Size(80, 18);
             this.label3.TabIndex = 8;
             this.label3.Text = "検索画像";
             // 
@@ -133,7 +134,7 @@
             // 
             this.PictureTextBox2.Location = new System.Drawing.Point(305, 64);
             this.PictureTextBox2.Name = "PictureTextBox2";
-            this.PictureTextBox2.Size = new System.Drawing.Size(300, 19);
+            this.PictureTextBox2.Size = new System.Drawing.Size(300, 25);
             this.PictureTextBox2.TabIndex = 9;
             // 
             // CaptureButton1
@@ -162,9 +163,18 @@
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BackgroundWorker1_ProgressChanged);
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(665, 27);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(276, 26);
+            this.comboBox1.TabIndex = 12;
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(984, 561);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.CaptureButton1);
             this.Controls.Add(this.PictureTextBox2);
@@ -202,6 +212,7 @@
         private System.Windows.Forms.Button CaptureButton1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 
